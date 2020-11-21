@@ -10,36 +10,31 @@ import (
 	"time"
 )
 
-func sendVerify(m db.Message) *AppError {
-	sendMsgTo(m, m.Destination)
-	return nil
-}
+func agreeAdd(m db.Verify) int {
 
-func agreeAdd(m db.Message) *AppError {
-	member := []int{m.SendFrom, m.Destination}
-	memStr, _ := json.Marshal(member)
-	cov := db.Conversation{ConversationType: db.COV_TYPE_SINGLE, ConversationMember: string(memStr)}
+	member := make([]db.MemberInfo, 2)
+	members := append(member, db.MemberInfo{UserId: m.UserFrom}, db.MemberInfo{UserId: m.UserTo})
+	cov := db.Conversation{ConversationType: db.COV_TYPE_SINGLE, Members: members}
 	_ = cov.Save()
-	user := &db.User{UserId: m.SendFrom}
+	user := &db.User{UserId: m.UserFrom}
 	_ = user.Get()
-	user.AddF(m.Destination, cov.ConversationId)
-	friend := &db.User{UserId: m.Destination}
+	user.Friends = append(user.Friends, db.RelationShip{UserId: m.UserTo, ConversationId: cov.ConversationId})
+	_ = user.Update()
+	friend := &db.User{UserId: m.UserTo}
 	_ = friend.Get()
-	friend.AddF(m.SendFrom, cov.ConversationId)
-	_ = m.Save()
-	sendMsgTo(m, m.Destination)
-	return nil
+	friend.Friends = append(friend.Friends, db.RelationShip{UserId: m.UserFrom, ConversationId: cov.ConversationId})
+	_ = friend.Update()
+	return cov.ConversationId
 }
 
 func sendChat(m db.Message) *AppError {
 	cov := db.Conversation{
-		ConversationId: m.Destination,
+		ConversationId: m.ConversationId,
 	}
 	_ = cov.Get()
-	var member []int
-	_ = json.Unmarshal([]byte(cov.ConversationMember), &member)
+	var member = cov.Members
 	for _, v := range member {
-		sendMsgTo(m, v)
+		sendMsgTo(m, v.UserId)
 	}
 	return nil
 }
@@ -49,17 +44,7 @@ func sendMsgTo(message db.Message, to int) {
 	if !exit {
 		return
 	}
-	user := db.User{UserId: message.SendFrom}
-	user.Get()
-	m := make(map[string]interface{})
-	m["username"] = user.Username
-	m["avatar"] = user.Avatar
-	m["description"] = user.Description
-	m["userId"] = user.UserId
-	wrap := make(map[string]interface{})
-	wrap["message"] = message
-	wrap["user"] = user
-	rec, _ := json.Marshal(wrap)
+	rec, _ := json.Marshal(message)
 	_ = ws.wsWrite(websocket.TextMessage, rec)
 }
 
@@ -81,7 +66,7 @@ func requestMessageList(w http.ResponseWriter, r *http.Request) *AppError {
 func HandleMsg(msg []byte) *AppError {
 	var m db.Message
 	m.SendFrom = -1
-	m.Destination = -1
+	m.ConversationId = -1
 	_ = json.Unmarshal(msg, &m)
 	if m.SendFrom == -1 || m.MessageType == -1 {
 		return &AppError{statusCode: 400, message: "from 和 messageType 不能为空"}
@@ -90,14 +75,13 @@ func HandleMsg(msg []byte) *AppError {
 		m.CreateAt = time.Now().Unix()
 	}
 	var err *AppError
-	_ = m.Save()
+	if m.MessageId == 0 {
+		_ = m.Save()
+	} else {
+		_ = m.Update()
+		return nil
+	}
 	switch m.MessageType {
-	case db.SendVerifyAdd:
-		err = sendVerify(m)
-		break
-	case db.VerifyAgree:
-		err = agreeAdd(m)
-		break
 	case db.TEXT:
 		err = sendChat(m)
 		break

@@ -120,23 +120,23 @@ func FindUser(w http.ResponseWriter, r *http.Request) *AppError {
 	return nil
 }
 
-func relationWithUser(w http.ResponseWriter, r *http.Request) *AppError {
-	q := r.URL.Query()
-	ownerId, _ := strconv.Atoi(q.Get("ownerId"))
-	userId, _ := strconv.Atoi(q.Get("userId"))
-	owner := db.User{UserId: ownerId}
-	owner.Get()
-	var relations []int
-	_ = json.Unmarshal([]byte(owner.Friends), &relations)
-	isFriend := false
-	for _, v := range relations {
-		if v == userId {
-			isFriend = true
-			break
-		}
-	}
+func findUserByIds(w http.ResponseWriter, r *http.Request) *AppError {
+	var ids = r.URL.Query().Get("ids")
+	list := db.FindUserByIds(ids)
+	sendOkWithData(w, list)
+	return nil
+}
+
+func findUserById(w http.ResponseWriter, r *http.Request) *AppError {
+	var id = r.URL.Query().Get("id")
+	userId, _ := strconv.ParseInt(id, 10, 32)
+	user := db.User{UserId: int(userId)}
+	_ = user.Get()
 	m := make(map[string]interface{})
-	m["isFriend"] = isFriend
+	m["avatar"] = user.Avatar
+	m["username"] = user.Username
+	m["userId"] = user.UserId
+	m["description"] = user.Description
 	sendOkWithData(w, m)
 	return nil
 }
@@ -147,8 +147,7 @@ func requestUserRelation(w http.ResponseWriter, r *http.Request) *AppError {
 	ownerId, _ := strconv.Atoi(q.Get("userId"))
 	owner := db.User{UserId: ownerId}
 	owner.Get()
-	var relations []db.RelationShip
-	_ = json.Unmarshal([]byte(owner.Friends), &relations)
+	var relations = owner.Friends
 	list := make([]map[string]interface{}, len(relations))
 	for i, v := range relations {
 		m := make(map[string]interface{})
