@@ -103,12 +103,6 @@ func (wsConn *wsConnection) processLoop() {
 		log.Println("接收到消息", string(msg.data))
 
 		HandleMsg(msg.data)
-		// 修改以下内容把客户端传递的消息传递给处理程序
-		//err = wsConn.wsWrite(msg.messageType, msg.data)
-		//if err != nil {
-		//	log.Println("发送消息给客户端出现错误", err.Error())
-		//	break
-		//}
 	}
 }
 

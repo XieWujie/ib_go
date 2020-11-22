@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gorilla/websocket"
+	"log"
 	"net/http"
 	"strconv"
 	"time"
@@ -41,11 +42,25 @@ func sendChat(m db.Message) *AppError {
 
 func sendMsgTo(message db.Message, to int) {
 	ws, exit := wsConnAll[to]
+	user := db.User{UserId: message.SendFrom}
+	user.Get()
+	var m = make(map[string]interface{})
+	m["avatar"] = user.Avatar
+	m["userId"] = user.UserId
+	m["username"] = user.Username
+	m["description"] = user.Description
+	var target = make(map[string]interface{})
+	target["message"] = message
+	target["user"] = m
 	if !exit {
 		return
 	}
-	rec, _ := json.Marshal(message)
-	_ = ws.wsWrite(websocket.TextMessage, rec)
+	rec, _ := json.Marshal(target)
+	fmt.Println("sendTo:", user.Username, string(rec))
+	err := ws.wsWrite(websocket.TextMessage, rec)
+	if err != nil {
+		log.Println(err)
+	}
 }
 
 func requestMessageList(w http.ResponseWriter, r *http.Request) *AppError {

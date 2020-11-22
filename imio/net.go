@@ -15,6 +15,7 @@ func RegisterHttpListener() {
 	http.Handle("/verify/get", netHandler(getVerify))
 	http.Handle("/verify/send", netHandler(sendVerify))
 	http.Handle("/room/create", netHandler(createRoom))
+	http.Handle("/conversation/getMembers", netHandler(getMembers))
 	http.Handle("/room/get", netHandler(getRoom))
 	http.Handle("/user/getByIds", netHandler(findUserByIds))
 	http.Handle("/user/getById", netHandler(findUserById))
