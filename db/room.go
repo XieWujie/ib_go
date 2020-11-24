@@ -11,7 +11,7 @@ type Room struct {
 
 type MemberInfo struct {
 	UserId   int    `json:"userId"`
-	NickName string `json:nickName`
+	NickName string `json:"nickName"`
 }
 
 func (room *Room) Save() error {
@@ -21,6 +21,11 @@ func (room *Room) Save() error {
 
 func (room *Room) Get() error {
 	_, err := engine.Get(room)
+	return err
+}
+
+func (room *Room) Update() error {
+	_, err := engine.ID(room.ConversationId).Update(room)
 	return err
 }
 

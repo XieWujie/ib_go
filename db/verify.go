@@ -32,6 +32,6 @@ func (verify *Verify) UpdateState() error {
 
 func FindVerifyList(userId int) []Verify {
 	var result []Verify
-	_ = engine.Where("userTo=?", userId).Find(result)
+	_ = engine.Where("user_to=?", userId).Find(&result)
 	return result
 }

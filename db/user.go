@@ -20,13 +20,18 @@ type RelationShip struct {
 }
 
 func (user *User) Get() error {
+	_, err := engine.ID(user.UserId).Get(user)
+	return err
+}
+
+func (user *User) GetByName() error {
 	_, err := engine.Get(user)
 	return err
 }
 
 func FindUserByIds(ids string) []map[string]interface{} {
 	var result []User
-	_ = engine.Where("userId in ?", ids).Find(&result)
+	_ = engine.Where("user_id in ?", ids).Find(&result)
 
 	list := make([]map[string]interface{}, len(result))
 	for i, user := range result {

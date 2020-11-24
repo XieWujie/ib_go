@@ -47,11 +47,7 @@ func (m *Message) Get() error {
 
 func MessageFind(ty int, destination int, before int64) []map[string]interface{} {
 	var result []Message
-	if ty >= 10 {
-		_ = engine.Where("conversationId=? and messageType>? and createAt<?", destination, ty, before).Find(&result)
-	} else {
-		_ = engine.Where("conversationId=? and messageType=? and createAt<?", destination, ty, before).Find(&result)
-	}
+	_ = engine.Where("conversation_id=? and create_at<?", destination, before).Find(&result)
 	var list = make([]map[string]interface{}, len(result))
 	for i, v := range result {
 		var user = User{UserId: v.SendFrom}
@@ -64,7 +60,7 @@ func MessageFind(ty int, destination int, before int64) []map[string]interface{}
 		m["description"] = user.Description
 		var r = make(map[string]interface{})
 		r["user"] = m
-		r["message"] = result
+		r["message"] = v
 		list[i] = r
 	}
 	return list

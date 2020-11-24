@@ -54,3 +54,11 @@ func getRoom(w http.ResponseWriter, r *http.Request) *AppError {
 	sendOkWithData(w, list)
 	return nil
 }
+
+func roomUpdate(w http.ResponseWriter, r *http.Request) *AppError {
+	room := new(db.Room)
+	json.NewDecoder(r.Body).Decode(&room)
+	_ = room.Update()
+	sendOkWithData(w, room)
+	return nil
+}

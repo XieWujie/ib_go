@@ -42,7 +42,7 @@ func checkLogin(username string, password string) (*db.User, *AppError) {
 		return nil, &AppError{message: "密码不能为空", statusCode: http.StatusBadRequest}
 	}
 	var user = db.User{Username: username}
-	err := user.Get()
+	err := user.GetByName()
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -93,7 +93,7 @@ func checkRegister(username string, password string) *AppError {
 		return &AppError{message: "密码不能为空", statusCode: http.StatusBadRequest}
 	}
 	var user = db.User{Username: username}
-	err := user.Get()
+	err := user.GetByName()
 	if err != nil {
 		log.Fatal(err)
 	}

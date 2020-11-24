@@ -20,6 +20,7 @@ func RegisterHttpListener() {
 	http.Handle("/user/getByIds", netHandler(findUserByIds))
 	http.Handle("/user/getById", netHandler(findUserById))
 	http.Handle("/user/update", netHandler(userUpdate))
+	http.Handle("/room/update", netHandler(roomUpdate))
 
 	//http.HandleMsg("/pushService",websocket.Handler(LongConnect))
 	StartWebsocket()

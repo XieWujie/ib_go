@@ -6,8 +6,6 @@ import (
 	"fmt"
 	"github.com/gorilla/websocket"
 	"log"
-	"net/http"
-	"strconv"
 )
 
 func agreeAdd(m db.Verify) int {
@@ -60,21 +58,6 @@ func sendMsgTo(message db.Message, to int) {
 	if err != nil {
 		log.Println(err)
 	}
-}
-
-func requestMessageList(w http.ResponseWriter, r *http.Request) *AppError {
-	fmt.Println("请求消息列表")
-	q := r.URL.Query()
-	destination, _ := strconv.Atoi(q.Get("destination"))
-	messageType, _ := strconv.Atoi(q.Get("messageType"))
-	createAt := q.Get("before")
-	before := int64(^uint64(0) >> 1)
-	if len(createAt) != 0 {
-		before, _ = strconv.ParseInt(createAt, 10, 64)
-	}
-	list := db.MessageFind(messageType, destination, before)
-	sendOkWithData(w, list)
-	return nil
 }
 
 func HandleMsg(msg []byte) *AppError {
