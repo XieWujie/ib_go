@@ -8,7 +8,6 @@ import (
 	"log"
 	"net/http"
 	"strconv"
-	"time"
 )
 
 func agreeAdd(m db.Verify) int {
@@ -85,9 +84,6 @@ func HandleMsg(msg []byte) *AppError {
 	_ = json.Unmarshal(msg, &m)
 	if m.SendFrom == -1 || m.MessageType == -1 {
 		return &AppError{statusCode: 400, message: "from 和 messageType 不能为空"}
-	}
-	if m.CreateAt == 0 {
-		m.CreateAt = time.Now().Unix()
 	}
 	var err *AppError
 	if m.MessageId == 0 {

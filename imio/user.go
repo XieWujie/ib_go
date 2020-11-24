@@ -25,12 +25,9 @@ func loginListener(w http.ResponseWriter, r *http.Request) *AppError {
 		rec["token"], _ = createToken(string(user.UserId))
 		rec["userId"] = user.UserId
 		rec["username"] = username
-		receipt := Receipt{StatusCode: OK, Description: "ok", Data: rec}
-		result, e := json.Marshal(receipt)
-		if e != nil {
-			return &AppError{error: e, message: e.Error(), statusCode: 500}
-		}
-		_, _ = fmt.Fprintln(w, string(result))
+		rec["avatar"] = user.Avatar
+		rec["description"] = user.Description
+		sendOkWithData(w, rec)
 	} else {
 		return &AppError{message: "请求方式错误", statusCode: 400}
 	}
@@ -158,5 +155,17 @@ func requestUserRelation(w http.ResponseWriter, r *http.Request) *AppError {
 		list[i] = m
 	}
 	sendOkWithData(w, list)
+	return nil
+}
+
+func userUpdate(w http.ResponseWriter, r *http.Request) *AppError {
+	user := new(db.User)
+	_ = json.NewDecoder(r.Body).Decode(&user)
+	err := user.Update()
+	if err != nil {
+		return &AppError{statusCode: 500, error: err}
+	} else {
+		sendOkWithData(w, "ok")
+	}
 	return nil
 }

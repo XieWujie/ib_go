@@ -1,8 +1,6 @@
 package imio
 
 import (
-	"encoding/json"
-	"fmt"
 	"io"
 	"math/rand"
 	"net/http"
@@ -30,14 +28,8 @@ func handleFilePost(w http.ResponseWriter, r *http.Request) *AppError {
 		if err != nil {
 			return &AppError{error: err, statusCode: 500}
 		}
-		m := make(map[string]string)
-		m["url"] = createUrl(fileName)
-		rp := Receipt{StatusCode: http.StatusOK, Description: "上传成功", Data: m}
-		t, e := json.Marshal(rp)
-		if e != nil {
-			return &AppError{error: e, statusCode: 500}
-		}
-		_, err = fmt.Fprintln(w, string(t))
+		url := createUrl(fileName)
+		sendOkWithData(w, url)
 		defer f.Close()
 	} else {
 		return &AppError{message: "请求方式错误", statusCode: 400}
@@ -74,7 +66,7 @@ func GetFile(fileType string) (string, string) {
 	return filePath, fileName
 }
 func createUrl(fileName string) string {
-	url := LocalIp + "/file/get/" + fileName
+	url := "/file/get/" + fileName
 	return url
 }
 
@@ -83,5 +75,5 @@ func getPathFromUrl(url string) string {
 	name := url[index:]
 	index = strings.LastIndex(name, ".") + 1
 	fileType := name[index:]
-	return "F:\\file\\type_" + fileType + "\\" + name
+	return "E:\\file\\type_" + fileType + "\\" + name
 }
