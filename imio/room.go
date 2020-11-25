@@ -20,12 +20,15 @@ func createRoom(w http.ResponseWriter, r *http.Request) *AppError {
 	_ = conversation.Save()
 	en.Room.ConversationId = conversation.ConversationId
 	if len(en.Room.RoomName) == 0 {
-		var i = 0
-		for _, v := range en.Members {
+		for i, v := range en.Members {
+
 			user := db.User{UserId: v.UserId}
 			_ = user.Get()
-			en.Room.RoomName += "&&" + user.Username
-			i++
+			if i == 1 {
+				en.Room.RoomName = user.Username
+			} else {
+				en.Room.RoomName += "&" + user.Username
+			}
 			if i > 4 {
 				break
 			}

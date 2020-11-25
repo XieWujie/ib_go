@@ -47,7 +47,7 @@ func checkLogin(username string, password string) (*db.User, *AppError) {
 		log.Fatal(err)
 	}
 	if user.Password != password {
-		return nil, &AppError{message: "账号或密码错误", statusCode: http.StatusBadRequest}
+		return nil, &AppError{message: "账号或密码错误", statusCode: 400}
 	}
 	return &user, nil
 }
@@ -73,7 +73,7 @@ func handlerRegister(w http.ResponseWriter, r *http.Request) *AppError {
 		}
 		rec := make(map[string]string)
 		rec["token"], _ = createToken(username)
-		rec["userid"] = strconv.Itoa(user.UserId)
+		rec["userId"] = strconv.Itoa(user.UserId)
 		rec["username"] = username
 		receipt := Receipt{StatusCode: OK, Description: "注册成功", Data: rec}
 		result, _ := json.Marshal(receipt)
@@ -167,5 +167,13 @@ func userUpdate(w http.ResponseWriter, r *http.Request) *AppError {
 	} else {
 		sendOkWithData(w, "ok")
 	}
+	return nil
+}
+
+func logout(w http.ResponseWriter, r *http.Request) *AppError {
+	var userId = r.URL.Query().Get("userId")
+	var id, _ = strconv.Atoi(userId)
+	wsLogOut(id)
+	sendOkWithData(w, "ok")
 	return nil
 }

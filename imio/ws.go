@@ -90,6 +90,14 @@ func wsHandler(resp http.ResponseWriter, req *http.Request) {
 	go wsConn.wsWriteLoop()
 }
 
+func wsLogOut(id int) {
+	var ws = wsConnAll[id]
+	if ws != nil {
+		ws.close()
+		delete(wsConnAll, id)
+	}
+}
+
 // 处理队列中的消息
 func (wsConn *wsConnection) processLoop() {
 	// 处理消息队列中的消息

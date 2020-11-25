@@ -30,8 +30,23 @@ func (verify *Verify) UpdateState() error {
 	return err
 }
 
-func FindVerifyList(userId int) []Verify {
+func FindVerifyList(userId int) []map[string]interface{} {
 	var result []Verify
 	_ = engine.Where("user_to=?", userId).Find(&result)
-	return result
+	var list = make([]map[string]interface{}, len(result))
+	for i, v := range result {
+		var user = User{UserId: v.UserFrom}
+		user.Get()
+		var m = make(map[string]interface{})
+		m["avatar"] = user.Avatar
+		m["userId"] = user.UserId
+		m["username"] = user.Username
+		m["description"] = user.Description
+		m["description"] = user.Description
+		var r = make(map[string]interface{})
+		r["user"] = m
+		r["verify"] = v
+		list[i] = r
+	}
+	return list
 }

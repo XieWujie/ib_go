@@ -20,18 +20,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="73946b17-f69b-4b47-b974-3ed1f4001a1b" name="Default Changelist" comment="file post and get">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/db.go" beforeDir="false" afterPath="$PROJECT_DIR$/db/db.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/message.go" beforeDir="false" afterPath="$PROJECT_DIR$/db/message.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/room.go" beforeDir="false" afterPath="$PROJECT_DIR$/db/room.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/db/user.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/verify.go" beforeDir="false" afterPath="$PROJECT_DIR$/db/verify.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/imio/conversation.go" beforeDir="false" afterPath="$PROJECT_DIR$/imio/conversation.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imio/message.go" beforeDir="false" afterPath="$PROJECT_DIR$/imio/message.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/imio/net.go" beforeDir="false" afterPath="$PROJECT_DIR$/imio/net.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/imio/room.go" beforeDir="false" afterPath="$PROJECT_DIR$/imio/room.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/imio/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/imio/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imio/ws.go" beforeDir="false" afterPath="$PROJECT_DIR$/imio/ws.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -136,38 +132,38 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="579" y="333" key="Github.CreateGistDialog/0.0.1536.864@0.0.1536.864" timestamp="1606042129296" />
-    <state width="1175" height="183" key="GridCell.Tab.0.bottom" timestamp="1606227729589">
+    <state width="1171" height="336" key="GridCell.Tab.0.bottom" timestamp="1606304788411">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1175" height="183" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1606227729589" />
-    <state width="1175" height="183" key="GridCell.Tab.0.center" timestamp="1606227729589">
+    <state width="1171" height="336" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1606304788411" />
+    <state width="1171" height="336" key="GridCell.Tab.0.center" timestamp="1606304788411">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1175" height="183" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1606227729589" />
-    <state width="1175" height="183" key="GridCell.Tab.0.left" timestamp="1606227729589">
+    <state width="1171" height="336" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1606304788411" />
+    <state width="1171" height="336" key="GridCell.Tab.0.left" timestamp="1606304788409">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1175" height="183" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1606227729589" />
-    <state width="1175" height="183" key="GridCell.Tab.0.right" timestamp="1606227729589">
+    <state width="1171" height="336" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1606304788409" />
+    <state width="1171" height="336" key="GridCell.Tab.0.right" timestamp="1606304788411">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1175" height="183" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1606227729589" />
-    <state width="745" height="264" key="GridCell.Tab.1.bottom" timestamp="1606225118016">
+    <state width="1171" height="336" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1606304788411" />
+    <state width="745" height="264" key="GridCell.Tab.1.bottom" timestamp="1606271663810">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="745" height="264" key="GridCell.Tab.1.bottom/0.0.1536.864@0.0.1536.864" timestamp="1606225118016" />
-    <state width="745" height="264" key="GridCell.Tab.1.center" timestamp="1606225118016">
+    <state width="745" height="264" key="GridCell.Tab.1.bottom/0.0.1536.864@0.0.1536.864" timestamp="1606271663810" />
+    <state width="745" height="264" key="GridCell.Tab.1.center" timestamp="1606271663809">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="745" height="264" key="GridCell.Tab.1.center/0.0.1536.864@0.0.1536.864" timestamp="1606225118016" />
-    <state width="745" height="264" key="GridCell.Tab.1.left" timestamp="1606225118016">
+    <state width="745" height="264" key="GridCell.Tab.1.center/0.0.1536.864@0.0.1536.864" timestamp="1606271663809" />
+    <state width="745" height="264" key="GridCell.Tab.1.left" timestamp="1606271663809">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="745" height="264" key="GridCell.Tab.1.left/0.0.1536.864@0.0.1536.864" timestamp="1606225118016" />
-    <state width="745" height="264" key="GridCell.Tab.1.right" timestamp="1606225118016">
+    <state width="745" height="264" key="GridCell.Tab.1.left/0.0.1536.864@0.0.1536.864" timestamp="1606271663809" />
+    <state width="745" height="264" key="GridCell.Tab.1.right" timestamp="1606271663809">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="745" height="264" key="GridCell.Tab.1.right/0.0.1536.864@0.0.1536.864" timestamp="1606225118016" />
+    <state width="745" height="264" key="GridCell.Tab.1.right/0.0.1536.864@0.0.1536.864" timestamp="1606271663809" />
     <state width="113" height="477" key="HiddenNamespacesPopup" timestamp="1606227750280">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
@@ -206,14 +202,14 @@
           <option name="timeStamp" value="24" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/imio/conversation.go</url>
-          <line>39</line>
-          <option name="timeStamp" value="25" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/imio/user.go</url>
           <line>14</line>
           <option name="timeStamp" value="26" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/imio/user.go</url>
+          <line>61</line>
+          <option name="timeStamp" value="27" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

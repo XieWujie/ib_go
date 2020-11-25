@@ -2,9 +2,11 @@ package imio
 
 import (
 	"../db"
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strconv"
+	"strings"
 )
 
 func getMembers(w http.ResponseWriter, r *http.Request) *AppError {
@@ -38,5 +40,27 @@ func requestMessageList(w http.ResponseWriter, r *http.Request) *AppError {
 	}
 	list := db.MessageFind(messageType, conversationId, before)
 	sendOkWithData(w, list)
+	return nil
+}
+
+func getRecentMessage(w http.ResponseWriter, r *http.Request) *AppError {
+	var userId = r.URL.Query().Get("userId")
+	id, _ := strconv.Atoi(userId)
+	user := db.User{UserId: id}
+	_ = user.Get()
+	var list = make([]int, len(user.Friends)+len(user.Rooms))
+	for i, v := range user.Rooms {
+		list[i] = v
+	}
+	var roomPre = len(user.Rooms)
+	for i, v := range user.Friends {
+		list[i+roomPre] = v.ConversationId
+	}
+	var b, _ = json.Marshal(list)
+	var str = string(b)
+	str = strings.Replace(str, "[", "(", 1)
+	str = strings.Replace(str, "]", ")", 1)
+	result := db.FindRecentMessage(str)
+	sendOkWithData(w, result)
 	return nil
 }
