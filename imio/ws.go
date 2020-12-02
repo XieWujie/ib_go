@@ -2,6 +2,7 @@ package imio
 
 import (
 	"errors"
+	"fmt"
 	"github.com/gorilla/websocket"
 	"log"
 	"net/http"
@@ -15,7 +16,7 @@ const (
 	writeWait = 10 * time.Second
 
 	// Time allowed to read the next pong message from the peer.
-	pongWait = 6000 * time.Second
+	pongWait = 60 * time.Second
 
 	// Send pings to peer with this period. Must be less than pongWait.
 	pingPeriod = 40 * time.Second
@@ -60,6 +61,7 @@ type wsConnection struct {
 }
 
 func wsHandler(resp http.ResponseWriter, req *http.Request) {
+	fmt.Println(req.Header)
 	// 应答客户端告知升级连接为websocket
 	userIdStr := req.URL.Query().Get("userId")
 	userId, _ := strconv.Atoi(userIdStr)
@@ -118,6 +120,13 @@ func (wsConn *wsConnection) processLoop() {
 func (wsConn *wsConnection) wsReadLoop() {
 	// 设置消息的最大长度
 
+	wsConn.wsSocket.SetPingHandler(func(appData string) error {
+		fmt.Println(wsConn.id, "ping")
+		_ = wsConn.wsSocket.SetReadDeadline(time.Now().Add(pongWait))
+		_ = wsConn.wsSocket.SetWriteDeadline(time.Now().Add(pongWait))
+		// 读一个message
+		return nil
+	})
 	for {
 		wsConn.wsSocket.SetReadLimit(maxMessageSize)
 		_ = wsConn.wsSocket.SetReadDeadline(time.Now().Add(pongWait))

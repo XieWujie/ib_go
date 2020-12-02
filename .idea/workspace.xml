@@ -19,14 +19,12 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="73946b17-f69b-4b47-b974-3ed1f4001a1b" name="Default Changelist" comment="file post and get">
+    <list default="true" id="73946b17-f69b-4b47-b974-3ed1f4001a1b" name="Default Changelist" comment="message list">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/message.go" beforeDir="false" afterPath="$PROJECT_DIR$/db/message.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/verify.go" beforeDir="false" afterPath="$PROJECT_DIR$/db/verify.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imio/conversation.go" beforeDir="false" afterPath="$PROJECT_DIR$/imio/conversation.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imio/file.go" beforeDir="false" afterPath="$PROJECT_DIR$/imio/file.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imio/message.go" beforeDir="false" afterPath="$PROJECT_DIR$/imio/message.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/imio/net.go" beforeDir="false" afterPath="$PROJECT_DIR$/imio/net.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imio/room.go" beforeDir="false" afterPath="$PROJECT_DIR$/imio/room.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imio/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/imio/user.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/imio/ws.go" beforeDir="false" afterPath="$PROJECT_DIR$/imio/ws.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -113,7 +111,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first version" />
     <MESSAGE value="file post and get" />
-    <option name="LAST_COMMIT_MESSAGE" value="file post and get" />
+    <MESSAGE value="message list" />
+    <option name="LAST_COMMIT_MESSAGE" value="message list" />
   </component>
   <component name="WindowStateProjectService">
     <state x="172" y="273" key="#SQL_Dialects" timestamp="1605339669049">
@@ -132,38 +131,38 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="579" y="333" key="Github.CreateGistDialog/0.0.1536.864@0.0.1536.864" timestamp="1606042129296" />
-    <state width="1171" height="336" key="GridCell.Tab.0.bottom" timestamp="1606304788411">
+    <state width="1157" height="94" key="GridCell.Tab.0.bottom" timestamp="1606902212449">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1171" height="336" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1606304788411" />
-    <state width="1171" height="336" key="GridCell.Tab.0.center" timestamp="1606304788411">
+    <state width="1157" height="94" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1606902212449" />
+    <state width="1157" height="94" key="GridCell.Tab.0.center" timestamp="1606902212449">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1171" height="336" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1606304788411" />
-    <state width="1171" height="336" key="GridCell.Tab.0.left" timestamp="1606304788409">
+    <state width="1157" height="94" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1606902212448" />
+    <state width="1157" height="94" key="GridCell.Tab.0.left" timestamp="1606902212448">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1171" height="336" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1606304788409" />
-    <state width="1171" height="336" key="GridCell.Tab.0.right" timestamp="1606304788411">
+    <state width="1157" height="94" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1606902212448" />
+    <state width="1157" height="94" key="GridCell.Tab.0.right" timestamp="1606902212449">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1171" height="336" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1606304788411" />
-    <state width="745" height="264" key="GridCell.Tab.1.bottom" timestamp="1606271663810">
+    <state width="1157" height="94" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1606902212449" />
+    <state width="1187" height="372" key="GridCell.Tab.1.bottom" timestamp="1606882770856">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="745" height="264" key="GridCell.Tab.1.bottom/0.0.1536.864@0.0.1536.864" timestamp="1606271663810" />
-    <state width="745" height="264" key="GridCell.Tab.1.center" timestamp="1606271663809">
+    <state width="1187" height="372" key="GridCell.Tab.1.bottom/0.0.1536.864@0.0.1536.864" timestamp="1606882770856" />
+    <state width="1187" height="372" key="GridCell.Tab.1.center" timestamp="1606882770856">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="745" height="264" key="GridCell.Tab.1.center/0.0.1536.864@0.0.1536.864" timestamp="1606271663809" />
-    <state width="745" height="264" key="GridCell.Tab.1.left" timestamp="1606271663809">
+    <state width="1187" height="372" key="GridCell.Tab.1.center/0.0.1536.864@0.0.1536.864" timestamp="1606882770856" />
+    <state width="1187" height="372" key="GridCell.Tab.1.left" timestamp="1606882770856">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="745" height="264" key="GridCell.Tab.1.left/0.0.1536.864@0.0.1536.864" timestamp="1606271663809" />
-    <state width="745" height="264" key="GridCell.Tab.1.right" timestamp="1606271663809">
+    <state width="1187" height="372" key="GridCell.Tab.1.left/0.0.1536.864@0.0.1536.864" timestamp="1606882770856" />
+    <state width="1187" height="372" key="GridCell.Tab.1.right" timestamp="1606882770856">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="745" height="264" key="GridCell.Tab.1.right/0.0.1536.864@0.0.1536.864" timestamp="1606271663809" />
+    <state width="1187" height="372" key="GridCell.Tab.1.right/0.0.1536.864@0.0.1536.864" timestamp="1606882770856" />
     <state width="113" height="477" key="HiddenNamespacesPopup" timestamp="1606227750280">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
@@ -172,10 +171,10 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="270" y="76" key="SettingsEditor/0.0.1536.864@0.0.1536.864" timestamp="1601978060201" />
-    <state x="361" y="165" key="Vcs.Push.Dialog.v2" timestamp="1606202647067">
+    <state x="361" y="165" key="Vcs.Push.Dialog.v2" timestamp="1606309277524">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="361" y="165" key="Vcs.Push.Dialog.v2/0.0.1536.864@0.0.1536.864" timestamp="1606202647067" />
+    <state x="361" y="165" key="Vcs.Push.Dialog.v2/0.0.1536.864@0.0.1536.864" timestamp="1606309277524" />
     <state width="775" height="439" key="XDebugger.FullValuePopup" timestamp="1603452193783">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
@@ -184,10 +183,10 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="668" y="308" key="com.intellij.database.actions.DdlActions$CreateObject$1/0.0.1536.864@0.0.1536.864" timestamp="1606224016994" />
-    <state x="655" y="319" width="334" height="249" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1" timestamp="1606227674073">
+    <state x="655" y="319" width="334" height="249" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1" timestamp="1606902203302">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="655" y="319" width="334" height="249" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1/0.0.1536.864@0.0.1536.864" timestamp="1606227674073" />
+    <state x="655" y="319" width="334" height="249" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1/0.0.1536.864@0.0.1536.864" timestamp="1606902203302" />
     <state x="431" y="181" width="672" height="678" key="search.everywhere.popup" timestamp="1605491767502">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
@@ -200,11 +199,6 @@
           <url>file://$PROJECT_DIR$/imio/user.go</url>
           <line>114</line>
           <option name="timeStamp" value="24" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/imio/user.go</url>
-          <line>14</line>
-          <option name="timeStamp" value="26" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/imio/user.go</url>

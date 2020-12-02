@@ -5,7 +5,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gorilla/websocket"
+	"io"
 	"log"
+	"net/http"
+	"os"
 )
 
 func agreeAdd(m db.Verify) int {
@@ -40,7 +43,7 @@ func sendChat(m db.Message) *AppError {
 func sendMsgTo(message db.Message, to int) {
 	ws, exit := wsConnAll[to]
 	user := db.User{UserId: message.SendFrom}
-	user.Get()
+	_ = user.Get()
 	var m = make(map[string]interface{})
 	m["avatar"] = user.Avatar
 	m["userId"] = user.UserId
@@ -49,6 +52,11 @@ func sendMsgTo(message db.Message, to int) {
 	var target = make(map[string]interface{})
 	target["message"] = message
 	target["user"] = m
+	if message.FromType == db.MessageFromRoom {
+		room := db.Room{ConversationId: message.ConversationId}
+		room.Get()
+		target["room"] = room
+	}
 	if !exit {
 		return
 	}
@@ -60,11 +68,41 @@ func sendMsgTo(message db.Message, to int) {
 	}
 }
 
+func handleFileMsg(w http.ResponseWriter, r *http.Request) *AppError {
+	_ = r.ParseMultipartForm(32 << 20)
+	var message = r.FormValue("message")
+	var m db.Message
+	_ = json.Unmarshal([]byte(message), &m)
+	file, handler, err := r.FormFile("file")
+	if err != nil {
+		log.Println(err)
+		return &AppError{statusCode: 400, error: err}
+	}
+	defer file.Close()
+	var filePath = createFilePath(handler.Filename)
+	f, err := os.OpenFile(filePath, os.O_WRONLY|os.O_CREATE, 0666)
+	defer f.Close()
+	_, err = io.Copy(f, file)
+	if err != nil {
+		log.Println(err)
+		return &AppError{statusCode: 400, error: err}
+	}
+	m.Content = createUrl(handler.Filename)
+	var e = messageDispatch(m)
+	if e != nil {
+		return e
+	}
+	sendOkWithData(w, m)
+	return nil
+}
+
 func HandleMsg(msg []byte) *AppError {
 	var m db.Message
-	m.SendFrom = -1
-	m.ConversationId = -1
 	_ = json.Unmarshal(msg, &m)
+	return messageDispatch(m)
+}
+
+func messageDispatch(m db.Message) *AppError {
 	if m.SendFrom == -1 || m.MessageType == -1 {
 		return &AppError{statusCode: 400, message: "from 和 messageType 不能为空"}
 	}
@@ -75,11 +113,15 @@ func HandleMsg(msg []byte) *AppError {
 		_ = m.Update()
 		return nil
 	}
+
 	switch m.MessageType {
 	case db.TEXT:
 		err = sendChat(m)
 		break
 	case db.WRITE:
+		err = sendChat(m)
+		break
+	case db.IMAGE:
 		err = sendChat(m)
 		break
 	}

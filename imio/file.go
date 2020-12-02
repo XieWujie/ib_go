@@ -18,6 +18,7 @@ func getFileType(url string) string {
 func handleFilePost(w http.ResponseWriter, r *http.Request) *AppError {
 	if r.Method == "POST" {
 		r.ParseForm()
+		_ = r.ParseMultipartForm(32 << 20)
 		fileType := "png"
 		filePath, fileName := GetFile(fileType)
 		f, e := os.Create(filePath)
@@ -60,11 +61,20 @@ func GetFile(fileType string) (string, string) {
 		bytes[i] = byte(b)
 	}
 	fileName := string(bytes) + "." + fileType
-	basePath := "E:\\file\\type_" + fileType
+	basePath := "E:\\file\\" + fileType
 	_ = os.MkdirAll(basePath, os.ModeAppend)
 	filePath := basePath + "\\" + fileName
 	return filePath, fileName
 }
+
+func createFilePath(fileName string) string {
+	var lastIndex = strings.LastIndex(fileName, ".")
+	var directory = fileName[(lastIndex + 1):]
+	basePath := "E:\\file\\" + directory
+	_ = os.MkdirAll(basePath, os.ModeAppend)
+	return basePath + "\\" + fileName
+}
+
 func createUrl(fileName string) string {
 	url := "/file/get/" + fileName
 	return url
@@ -75,5 +85,5 @@ func getPathFromUrl(url string) string {
 	name := url[index:]
 	index = strings.LastIndex(name, ".") + 1
 	fileType := name[index:]
-	return "E:\\file\\type_" + fileType + "\\" + name
+	return "E:\\file\\" + fileType + "\\" + name
 }
