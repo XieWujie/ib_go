@@ -2,7 +2,7 @@ package db
 
 type verifyState int
 
-const Agree verifyState = 0
+const Agree verifyState = 3
 const Defy verifyState = 1
 const NoAction verifyState = 2
 

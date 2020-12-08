@@ -9,6 +9,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 )
 
 func agreeAdd(m db.Verify) int {
@@ -29,6 +30,11 @@ func agreeAdd(m db.Verify) int {
 }
 
 func sendChat(m db.Message) *AppError {
+	if m.MessageId == 0 {
+		_ = m.Save()
+	} else {
+		_ = m.Update()
+	}
 	cov := db.Conversation{
 		ConversationId: m.ConversationId,
 	}
@@ -38,6 +44,30 @@ func sendChat(m db.Message) *AppError {
 		sendMsgTo(m, v.UserId)
 	}
 	return nil
+}
+
+func sendAgreeFriendMessage(from int, conversationId int, to int) {
+	var message = db.Message{
+		MessageType:    db.AgreeFriend,
+		SendFrom:       from,
+		ConversationId: conversationId,
+		FromType:       db.MessageFromFriend,
+		CiteMessageId:  -1,
+	}
+	_ = message.Save()
+	sendMsgTo(message, to)
+}
+
+func sendVerifyMessage(from int, to int) {
+	var message = db.Message{
+		MessageType:    db.VerifyMessage,
+		SendFrom:       from,
+		ConversationId: -1,
+		FromType:       db.MessageFromFriend,
+		CiteMessageId:  -1,
+	}
+	_ = message.Save()
+	sendMsgTo(message, to)
 }
 
 func sendMsgTo(message db.Message, to int) {
@@ -107,12 +137,6 @@ func messageDispatch(m db.Message) *AppError {
 		return &AppError{statusCode: 400, message: "from 和 messageType 不能为空"}
 	}
 	var err *AppError
-	if m.MessageId == 0 {
-		_ = m.Save()
-	} else {
-		_ = m.Update()
-		return nil
-	}
 
 	switch m.MessageType {
 	case db.TEXT:
@@ -124,6 +148,18 @@ func messageDispatch(m db.Message) *AppError {
 	case db.IMAGE:
 		err = sendChat(m)
 		break
+	case db.WITHDRAW:
+		err = withdraw(m)
+		break
 	}
 	return err
+}
+
+func withdraw(m db.Message) *AppError {
+	var id, _ = strconv.ParseInt(m.Content, 10, 32)
+	var message = db.Message{MessageId: int(id)}
+	_ = message.Get()
+	message.MessageType = db.WITHDRAW
+	message.Content = "消息撤回"
+	return sendChat(message)
 }

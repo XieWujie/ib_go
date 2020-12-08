@@ -24,9 +24,11 @@ func sendVerify(w http.ResponseWriter, r *http.Request) *AppError {
 	}
 	if verify.State == db.NoAction {
 		_ = verify.Save()
+		sendVerifyMessage(verify.UserFrom, verify.UserTo)
 	} else if verify.State == db.Agree {
 		conversationId := agreeAdd(verify)
 		_ = verify.UpdateState()
+		sendAgreeFriendMessage(verify.UserTo, conversationId, verify.UserFrom)
 		verify.VerifyInfo = strconv.FormatInt(int64(conversationId), 10)
 	} else if verify.State == db.Defy {
 		_ = verify.UpdateState()

@@ -7,9 +7,11 @@ import (
 type messageType int32
 
 const VerifyMessage messageType = 3
+const AgreeFriend messageType = 2
 const TEXT messageType = 11
 const WRITE = 12
 const IMAGE = 13
+const WITHDRAW = 4
 
 type Message struct {
 	MessageId      int         `json:"messageId" xorm:"pk autoincr"`
@@ -21,6 +23,7 @@ type Message struct {
 	IsRead         bool        `json:"isRead"`
 	SendTime       int64       `json:"sendTime"`
 	FromType       int         `json:"fromType"`
+	CiteMessageId  int         `json:"citeMessageId"`
 }
 
 const MessageFromFriend = 1

@@ -13,6 +13,11 @@ func (c *Conversation) Save() error {
 	_, err := engine.InsertOne(c)
 	return err
 }
+
+func (c *Conversation) Update() error {
+	_, err := engine.ID(c.ConversationId).Update(c)
+	return err
+}
 func (c *Conversation) Get() error {
 	_, err := engine.Get(c)
 	return err

@@ -13,6 +13,11 @@ type roomCreate struct {
 	Members []db.MemberInfo `json:"members"`
 }
 
+type roomMemberAdd struct {
+	ConversationId int             `json:"conversationId"`
+	Members        []db.MemberInfo `json:"members"`
+}
+
 func createRoom(w http.ResponseWriter, r *http.Request) *AppError {
 	en := new(roomCreate)
 	_ = json.NewDecoder(r.Body).Decode(&en)
@@ -42,6 +47,52 @@ func createRoom(w http.ResponseWriter, r *http.Request) *AppError {
 	}
 	_ = en.Room.Save()
 	sendOkWithData(w, en.Room)
+	return nil
+}
+
+func addRoomMember(w http.ResponseWriter, r *http.Request) *AppError {
+	en := roomMemberAdd{}
+	_ = json.NewDecoder(r.Body).Decode(&en)
+	var conversation = db.Conversation{ConversationId: en.ConversationId}
+	_ = conversation.Get()
+	for _, v := range en.Members {
+		conversation.Members = append(conversation.Members, v)
+	}
+	_ = conversation.Update()
+	sendOkWithData(w, conversation)
+	return nil
+}
+
+type roomQuit struct {
+	UserId         int `json:"userId"`
+	ConversationId int `json:"conversationId"`
+}
+
+func quitRoom(w http.ResponseWriter, r *http.Request) *AppError {
+	en := roomQuit{}
+	_ = json.NewDecoder(r.Body).Decode(&en)
+	var conversation = db.Conversation{ConversationId: en.ConversationId}
+	_ = conversation.Get()
+	var members = conversation.Members
+	var newMembers = make([]db.MemberInfo, 0)
+	for _, v := range members {
+		if v.UserId != en.UserId {
+			newMembers = append(newMembers, v)
+		}
+	}
+	conversation.Members = newMembers
+	_ = conversation.Update()
+	var user = db.User{UserId: en.UserId}
+	user.Get()
+	var newRooms = make([]int, 0)
+	for _, v := range user.Rooms {
+		if v != en.ConversationId {
+			newRooms = append(newRooms, v)
+		}
+	}
+	user.Rooms = newRooms
+	_ = user.Update()
+	sendOkWithData(w, conversation)
 	return nil
 }
 
