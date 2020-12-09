@@ -21,6 +21,13 @@
   <component name="ChangeListManager">
     <list default="true" id="73946b17-f69b-4b47-b974-3ed1f4001a1b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/db/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imio/cnet.go" beforeDir="false" afterPath="$PROJECT_DIR$/imio/cnet.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imio/conversation.go" beforeDir="false" afterPath="$PROJECT_DIR$/imio/conversation.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imio/net.go" beforeDir="false" afterPath="$PROJECT_DIR$/imio/net.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imio/room.go" beforeDir="false" afterPath="$PROJECT_DIR$/imio/room.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imio/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/imio/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imio/ws.go" beforeDir="false" afterPath="$PROJECT_DIR$/imio/ws.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,6 +60,13 @@
         <item name="@localhost" type="feb32156:DbDataSourceImpl" />
         <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
         <item name="vlog: schema" type="76f4a085:MysqlImplModel$Schema" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="vlog: schema" type="76f4a085:MysqlImplModel$Schema" />
+        <item name="user: table" type="285a2a93:MysqlImplModel$Table" />
       </path>
       <path>
         <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
@@ -171,10 +185,10 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="521" y="274" key="#com.intellij.ide.actions.ChooseComponentsToExportDialog/0.0.1536.864@0.0.1536.864" timestamp="1607424099514" />
-    <state x="385" y="30" key="CommitChangelistDialog2" timestamp="1607434332720">
+    <state x="385" y="30" key="CommitChangelistDialog2" timestamp="1607434362428">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="385" y="30" key="CommitChangelistDialog2/0.0.1536.864@0.0.1536.864" timestamp="1607434332720" />
+    <state x="385" y="30" key="CommitChangelistDialog2/0.0.1536.864@0.0.1536.864" timestamp="1607434362428" />
     <state x="549" y="187" key="FileChooserDialogImpl" timestamp="1602996712076">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
@@ -183,38 +197,38 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="579" y="333" key="Github.CreateGistDialog/0.0.1536.864@0.0.1536.864" timestamp="1606042129296" />
-    <state width="1342" height="88" key="GridCell.Tab.0.bottom" timestamp="1607433760489">
+    <state width="1342" height="192" key="GridCell.Tab.0.bottom" timestamp="1607512531473">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1342" height="88" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1607433760489" />
-    <state width="1342" height="88" key="GridCell.Tab.0.center" timestamp="1607433760489">
+    <state width="1342" height="192" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1607512531473" />
+    <state width="1342" height="192" key="GridCell.Tab.0.center" timestamp="1607512531472">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1342" height="88" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1607433760489" />
-    <state width="1342" height="88" key="GridCell.Tab.0.left" timestamp="1607433760487">
+    <state width="1342" height="192" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1607512531472" />
+    <state width="1342" height="192" key="GridCell.Tab.0.left" timestamp="1607512531472">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1342" height="88" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1607433760487" />
-    <state width="1342" height="88" key="GridCell.Tab.0.right" timestamp="1607433760489">
+    <state width="1342" height="192" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1607512531472" />
+    <state width="1342" height="192" key="GridCell.Tab.0.right" timestamp="1607512531473">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1342" height="88" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1607433760489" />
-    <state width="1342" height="265" key="GridCell.Tab.1.bottom" timestamp="1607427127998">
+    <state width="1342" height="192" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1607512531473" />
+    <state width="1342" height="192" key="GridCell.Tab.1.bottom" timestamp="1607512531473">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1342" height="265" key="GridCell.Tab.1.bottom/0.0.1536.864@0.0.1536.864" timestamp="1607427127998" />
-    <state width="1342" height="265" key="GridCell.Tab.1.center" timestamp="1607427127998">
+    <state width="1342" height="192" key="GridCell.Tab.1.bottom/0.0.1536.864@0.0.1536.864" timestamp="1607512531473" />
+    <state width="1342" height="192" key="GridCell.Tab.1.center" timestamp="1607512531473">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1342" height="265" key="GridCell.Tab.1.center/0.0.1536.864@0.0.1536.864" timestamp="1607427127998" />
-    <state width="1342" height="265" key="GridCell.Tab.1.left" timestamp="1607427127998">
+    <state width="1342" height="192" key="GridCell.Tab.1.center/0.0.1536.864@0.0.1536.864" timestamp="1607512531473" />
+    <state width="1342" height="192" key="GridCell.Tab.1.left" timestamp="1607512531473">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1342" height="265" key="GridCell.Tab.1.left/0.0.1536.864@0.0.1536.864" timestamp="1607427127998" />
-    <state width="1342" height="265" key="GridCell.Tab.1.right" timestamp="1607427127998">
+    <state width="1342" height="192" key="GridCell.Tab.1.left/0.0.1536.864@0.0.1536.864" timestamp="1607512531473" />
+    <state width="1342" height="192" key="GridCell.Tab.1.right" timestamp="1607512531473">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1342" height="265" key="GridCell.Tab.1.right/0.0.1536.864@0.0.1536.864" timestamp="1607427127998" />
+    <state width="1342" height="192" key="GridCell.Tab.1.right/0.0.1536.864@0.0.1536.864" timestamp="1607512531473" />
     <state width="212" height="477" key="HiddenNamespacesPopup" timestamp="1607260284149">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
@@ -223,10 +237,10 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="270" y="76" key="SettingsEditor/0.0.1536.864@0.0.1536.864" timestamp="1607424146008" />
-    <state x="361" y="165" key="Vcs.Push.Dialog.v2" timestamp="1607434298805">
+    <state x="361" y="165" key="Vcs.Push.Dialog.v2" timestamp="1607434366226">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="361" y="165" key="Vcs.Push.Dialog.v2/0.0.1536.864@0.0.1536.864" timestamp="1607434298805" />
+    <state x="361" y="165" key="Vcs.Push.Dialog.v2/0.0.1536.864@0.0.1536.864" timestamp="1607434366226" />
     <state width="775" height="439" key="XDebugger.FullValuePopup" timestamp="1603452193783">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
@@ -239,10 +253,10 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="655" y="319" width="334" height="249" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1/0.0.1536.864@0.0.1536.864" timestamp="1607427903235" />
-    <state x="431" y="181" width="672" height="678" key="search.everywhere.popup" timestamp="1605491767502">
+    <state x="431" y="181" width="672" height="678" key="search.everywhere.popup" timestamp="1607504436885">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="431" y="181" width="672" height="678" key="search.everywhere.popup/0.0.1536.864@0.0.1536.864" timestamp="1605491767502" />
+    <state x="431" y="181" width="672" height="678" key="search.everywhere.popup/0.0.1536.864@0.0.1536.864" timestamp="1607504436885" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -264,12 +278,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/imio/room.go</url>
-          <line>60</line>
+          <line>59</line>
           <option name="timeStamp" value="29" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/imio/room.go</url>
-          <line>92</line>
+          <line>91</line>
           <option name="timeStamp" value="33" />
         </line-breakpoint>
       </breakpoints>

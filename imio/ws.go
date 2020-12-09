@@ -61,7 +61,6 @@ type wsConnection struct {
 }
 
 func wsHandler(resp http.ResponseWriter, req *http.Request) {
-	fmt.Println(req.Header)
 	// 应答客户端告知升级连接为websocket
 	userIdStr := req.URL.Query().Get("userId")
 	userId, _ := strconv.Atoi(userIdStr)

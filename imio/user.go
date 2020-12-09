@@ -113,7 +113,50 @@ func FindUser(w http.ResponseWriter, r *http.Request) *AppError {
 	receipt := Receipt{StatusCode: OK, Description: "ok", Data: list}
 	rec, _ := json.Marshal(receipt)
 	body := string(rec)
-	fmt.Fprint(w, body)
+	_, _ = fmt.Fprint(w, body)
+	return nil
+}
+
+type noDisturb struct {
+	OwnerId int  `json:"ownerId"`
+	UserId  int  `json:"userId"`
+	Notify  bool `json:"isDisturb"`
+}
+
+func msgDisturb(w http.ResponseWriter, r *http.Request) *AppError {
+	en := new(noDisturb)
+	json.NewDecoder(r.Body).Decode(&en)
+	user := db.User{UserId: en.OwnerId}
+	_ = user.Get()
+	for _, v := range user.Friends {
+		if v.UserId == en.UserId {
+			v.Notify = en.Notify
+		}
+	}
+	_ = user.Update()
+	sendOk(w)
+	return nil
+}
+
+type roomNotify struct {
+	OwnerId        int  `json:"ownerId"`
+	ConversationId int  `json:"conversationId"`
+	Notify         bool `json:"notify"`
+}
+
+func roomMsgNotify(w http.ResponseWriter, r *http.Request) *AppError {
+	en := new(roomNotify)
+	_ = json.NewDecoder(r.Body).Decode(&en)
+	user := db.User{UserId: en.OwnerId}
+	_ = user.Get()
+	for i, v := range user.Rooms {
+		if v.ConversationId == en.ConversationId {
+			user.Rooms[i].Notify = en.Notify
+			break
+		}
+	}
+	_ = user.Update()
+	sendOk(w)
 	return nil
 }
 
@@ -143,7 +186,7 @@ func requestUserRelation(w http.ResponseWriter, r *http.Request) *AppError {
 	q := r.URL.Query()
 	ownerId, _ := strconv.Atoi(q.Get("userId"))
 	owner := db.User{UserId: ownerId}
-	owner.Get()
+	_ = owner.Get()
 	var relations = owner.Friends
 	list := make([]map[string]interface{}, len(relations))
 	for i, v := range relations {

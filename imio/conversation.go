@@ -50,7 +50,7 @@ func getRecentMessage(w http.ResponseWriter, r *http.Request) *AppError {
 	_ = user.Get()
 	var list = make([]int, len(user.Friends)+len(user.Rooms))
 	for i, v := range user.Rooms {
-		list[i] = v
+		list[i] = v.ConversationId
 	}
 	var roomPre = len(user.Rooms)
 	for i, v := range user.Friends {

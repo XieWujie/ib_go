@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"net/http"
 	"strconv"
-	"strings"
 )
 
 type roomCreate struct {
@@ -42,7 +41,7 @@ func createRoom(w http.ResponseWriter, r *http.Request) *AppError {
 	for _, v := range en.Members {
 		user := db.User{UserId: v.UserId}
 		_ = user.Get()
-		user.Rooms = append(user.Rooms, conversation.ConversationId)
+		user.Rooms = append(user.Rooms, db.RoomsMeta{ConversationId: conversation.ConversationId, Notify: true})
 		_ = user.Update()
 	}
 	_ = en.Room.Save()
@@ -84,9 +83,9 @@ func quitRoom(w http.ResponseWriter, r *http.Request) *AppError {
 	_ = conversation.Update()
 	var user = db.User{UserId: en.UserId}
 	user.Get()
-	var newRooms = make([]int, 0)
+	var newRooms = make([]db.RoomsMeta, 0)
 	for _, v := range user.Rooms {
-		if v != en.ConversationId {
+		if v.ConversationId != en.ConversationId {
 			newRooms = append(newRooms, v)
 		}
 	}
@@ -100,11 +99,20 @@ func getRoom(w http.ResponseWriter, r *http.Request) *AppError {
 	var userId, _ = strconv.Atoi(r.URL.Query().Get("userId"))
 	user := db.User{UserId: userId}
 	_ = user.Get()
-	var rooms, _ = json.Marshal(user.Rooms)
-	rstr := string(rooms)
-	rstr = strings.Replace(rstr, "[", "(", 1)
-	rstr = strings.Replace(rstr, "]", ")", -1)
-	list := db.FindRoom(rstr)
+	var rooms = user.Rooms
+	var list = make([]map[string]interface{}, len(rooms))
+	for i, v := range rooms {
+		room := db.Room{ConversationId: v.ConversationId}
+		room.Get()
+		var m = make(map[string]interface{})
+		m["conversationId"] = room.ConversationId
+		m["roomAvatar"] = room.RoomAvatar
+		m["roomMasterId"] = room.RoomMasterId
+		m["roomName"] = room.RoomName
+		m["notify"] = v.Notify
+		m["background"] = v.Background
+		list[i] = m
+	}
 	sendOkWithData(w, list)
 	return nil
 }

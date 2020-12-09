@@ -11,12 +11,20 @@ type User struct {
 	Avatar      string         `json:"avatar"`
 	Description string         `json:"description"`
 	Friends     []RelationShip `json:"friends" xorm:"json"`
-	Rooms       []int          `json:"conversations" xorm:"json"`
+	Rooms       []RoomsMeta    `json:"conversations" xorm:"json"`
 }
 
 type RelationShip struct {
-	UserId         int `json:"user_id"`
-	ConversationId int `json:"conversation_id"`
+	UserId         int    `json:"user_id"`
+	ConversationId int    `json:"conversation_id"`
+	Notify         bool   `json:"notify"`
+	Background     string `json:"background"`
+}
+
+type RoomsMeta struct {
+	ConversationId int    `json:"conversationId"`
+	Notify         bool   `json:"notify"`
+	Background     string `json:"background"`
 }
 
 func (user *User) Get() error {

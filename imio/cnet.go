@@ -142,9 +142,7 @@ func errorReceipt(w http.ResponseWriter, code int, reason string) {
 }
 
 func sendOk(w http.ResponseWriter) {
-	receipt := &Receipt{StatusCode: 200, Description: "ok", Data: "ok"}
-	rec, _ := json.Marshal(&receipt)
-	fmt.Fprintln(w, string(rec))
+	sendOkWithData(w, "ok")
 }
 
 func sendOkWithData(w http.ResponseWriter, data interface{}) {

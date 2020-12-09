@@ -26,6 +26,8 @@ func RegisterHttpListener() {
 	http.Handle("/message/fileMsg", netHandler(handleFileMsg))
 	http.Handle("/room/memberAdd", netHandler(addRoomMember))
 	http.Handle("/room/quit", netHandler(quitRoom))
+	http.Handle("/user/notify", netHandler(msgDisturb))
+	http.Handle("/room/notify", netHandler(roomMsgNotify))
 	//http.HandleMsg("/pushService",websocket.Handler(LongConnect))
 	StartWebsocket()
 	err := http.ListenAndServe(":8000", nil)
