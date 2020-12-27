@@ -10,6 +10,7 @@ const VerifyMessage messageType = 3
 const AgreeFriend messageType = 2
 const TEXT messageType = 11
 const WRITE = 12
+const RECORD  = 14
 const IMAGE = 13
 const WITHDRAW = 4
 
@@ -24,6 +25,7 @@ type Message struct {
 	SendTime       int64       `json:"sendTime"`
 	FromType       int         `json:"fromType"`
 	CiteMessageId  int         `json:"citeMessageId"`
+	Notify         bool       	`json:"notify"`
 }
 
 const MessageFromFriend = 1

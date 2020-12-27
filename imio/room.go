@@ -28,8 +28,8 @@ func createRoom(w http.ResponseWriter, r *http.Request) *AppError {
 
 			user := db.User{UserId: v.UserId}
 			_ = user.Get()
-			if i == 1 {
-				en.Room.RoomName = user.Username
+			if i ==0  {
+				en.Room.RoomName = "_"+user.Username
 			} else {
 				en.Room.RoomName += "&" + user.Username
 			}
@@ -59,6 +59,27 @@ func addRoomMember(w http.ResponseWriter, r *http.Request) *AppError {
 	}
 	_ = conversation.Update()
 	sendOkWithData(w, conversation)
+	return nil
+}
+
+func upDateRoomMarkName(w http.ResponseWriter,r * http.Request)*AppError  {
+	var en  = new(markNameEntity)
+	_ = json.NewDecoder(r.Body).Decode(&en)
+	var owner = db.User{UserId:en.OwnerId}
+	_ = owner.Get()
+	var isUpdate = false
+	for i,v := range owner.Rooms{
+		if en.ConversationId == v.ConversationId{
+			owner.Rooms[i].MarkName = en.MarkName
+			_ = owner.Update()
+			isUpdate = true
+			sendOk(w)
+			break
+		}
+	}
+	if !isUpdate{
+		return &AppError{statusCode:400,message:"找不到conversationId"}
+	}
 	return nil
 }
 
@@ -110,6 +131,7 @@ func getRoom(w http.ResponseWriter, r *http.Request) *AppError {
 		m["roomMasterId"] = room.RoomMasterId
 		m["roomName"] = room.RoomName
 		m["notify"] = v.Notify
+		m["markName"] = v.MarkName
 		m["background"] = v.Background
 		list[i] = m
 	}

@@ -18,6 +18,7 @@ type RelationShip struct {
 	UserId         int    `json:"user_id"`
 	ConversationId int    `json:"conversation_id"`
 	Notify         bool   `json:"notify"`
+	MarkName       string 	`json:"markName"`
 	Background     string `json:"background"`
 }
 
@@ -25,6 +26,7 @@ type RoomsMeta struct {
 	ConversationId int    `json:"conversationId"`
 	Notify         bool   `json:"notify"`
 	Background     string `json:"background"`
+	MarkName      string 	`json:"markName"`
 }
 
 func (user *User) Get() error {

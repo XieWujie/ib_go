@@ -12,22 +12,7 @@ import (
 	"strconv"
 )
 
-func agreeAdd(m db.Verify) int {
 
-	member := make([]db.MemberInfo, 2)
-	members := append(member, db.MemberInfo{UserId: m.UserFrom}, db.MemberInfo{UserId: m.UserTo})
-	cov := db.Conversation{ConversationType: db.COV_TYPE_SINGLE, Members: members}
-	_ = cov.Save()
-	user := &db.User{UserId: m.UserFrom}
-	_ = user.Get()
-	user.Friends = append(user.Friends, db.RelationShip{UserId: m.UserTo, ConversationId: cov.ConversationId})
-	_ = user.Update()
-	friend := &db.User{UserId: m.UserTo}
-	_ = friend.Get()
-	friend.Friends = append(friend.Friends, db.RelationShip{UserId: m.UserFrom, ConversationId: cov.ConversationId})
-	_ = friend.Update()
-	return cov.ConversationId
-}
 
 func sendChat(m db.Message) *AppError {
 	if m.MessageId == 0 {
@@ -72,6 +57,28 @@ func sendVerifyMessage(from int, to int) {
 
 func sendMsgTo(message db.Message, to int) {
 	ws, exit := wsConnAll[to]
+	if !exit {
+		return
+	}
+	var toUser = db.User{UserId:to}
+	_ = toUser.Get()
+	if message.FromType == db.MessageFromRoom {
+		for _,v := range toUser.Rooms{
+			if message.ConversationId == v.ConversationId{
+				message.Notify = v.Notify
+				break
+			}
+		}
+	}else if message.FromType == db.MessageFromFriend {
+		for _,v := range toUser.Friends{
+			if message.ConversationId == v.ConversationId{
+				message.Notify = v.Notify
+				break
+			}
+		}
+	}else {
+		message.Notify = true
+	}
 	user := db.User{UserId: message.SendFrom}
 	_ = user.Get()
 	var m = make(map[string]interface{})
@@ -86,9 +93,6 @@ func sendMsgTo(message db.Message, to int) {
 		room := db.Room{ConversationId: message.ConversationId}
 		room.Get()
 		target["room"] = room
-	}
-	if !exit {
-		return
 	}
 	rec, _ := json.Marshal(target)
 	fmt.Println("sendTo:", user.Username, string(rec))
@@ -150,6 +154,9 @@ func messageDispatch(m db.Message) *AppError {
 		break
 	case db.WITHDRAW:
 		err = withdraw(m)
+		break
+	case db.RECORD:
+		err = sendChat(m)
 		break
 	}
 	return err

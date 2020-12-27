@@ -4,9 +4,12 @@ import (
 	"../db"
 	"encoding/json"
 	"fmt"
+	"io"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
+	"strings"
 )
 
 func loginListener(w http.ResponseWriter, r *http.Request) *AppError {
@@ -138,14 +141,14 @@ func msgDisturb(w http.ResponseWriter, r *http.Request) *AppError {
 	return nil
 }
 
-type roomNotify struct {
+type notifyEntity struct {
 	OwnerId        int  `json:"ownerId"`
 	ConversationId int  `json:"conversationId"`
 	Notify         bool `json:"notify"`
 }
 
 func roomMsgNotify(w http.ResponseWriter, r *http.Request) *AppError {
-	en := new(roomNotify)
+	en := new(notifyEntity)
 	_ = json.NewDecoder(r.Body).Decode(&en)
 	user := db.User{UserId: en.OwnerId}
 	_ = user.Get()
@@ -181,25 +184,43 @@ func findUserById(w http.ResponseWriter, r *http.Request) *AppError {
 	return nil
 }
 
-func requestUserRelation(w http.ResponseWriter, r *http.Request) *AppError {
-	fmt.Println("request user relationship")
-	q := r.URL.Query()
-	ownerId, _ := strconv.Atoi(q.Get("userId"))
-	owner := db.User{UserId: ownerId}
-	_ = owner.Get()
-	var relations = owner.Friends
-	list := make([]map[string]interface{}, len(relations))
-	for i, v := range relations {
-		m := make(map[string]interface{})
-		user := db.User{UserId: v.UserId}
-		user.Get()
-		m["user"] = user
-		m["conversationId"] = v.ConversationId
-		list[i] = m
+func changeCustomRoomBg(w http.ResponseWriter, r *http.Request) *AppError {
+	_ = r.ParseMultipartForm(32 << 20)
+	var message = r.FormValue("json")
+	var m map[string]int
+	_ = json.Unmarshal([]byte(message), &m)
+	file, handler, err := r.FormFile("file")
+	if err != nil {
+		log.Println(err)
+		return &AppError{statusCode: 400, error: err}
 	}
-	sendOkWithData(w, list)
+	defer file.Close()
+	var filePath = createFilePath(handler.Filename)
+	f, err := os.OpenFile(filePath, os.O_WRONLY|os.O_CREATE, 0666)
+	defer f.Close()
+	_, err = io.Copy(f, file)
+	if err != nil {
+		log.Println(err)
+		return &AppError{statusCode: 400, error: err}
+	}
+	url := createUrl(handler.Filename)
+	var user = db.User{UserId:m["userId"]}
+	_ = user.Get()
+	conversationId := m["conversationId"]
+	for i, v := range user.Rooms {
+		if v.ConversationId == conversationId {
+			user.Rooms[i].Background = url
+			break
+		}
+	}
+	_ = user.Update()
+	var newM = make(map[string]string)
+	newM["background"] = url
+	sendOkWithData(w, newM)
 	return nil
 }
+
+
 
 func userUpdate(w http.ResponseWriter, r *http.Request) *AppError {
 	user := new(db.User)
@@ -218,5 +239,25 @@ func logout(w http.ResponseWriter, r *http.Request) *AppError {
 	var id, _ = strconv.Atoi(userId)
 	wsLogOut(id)
 	sendOkWithData(w, "ok")
+	return nil
+}
+
+func getUserNetAddress(w http.ResponseWriter,r* http.Request)*AppError  {
+	var userId = r.URL.Query().Get("userId")
+	var id, _ = strconv.Atoi(userId)
+	conn,exit :=wsConnAll[id]
+	conn.wsSocket.RemoteAddr()
+	if exit{
+		ip :=conn.wsSocket.RemoteAddr().String()
+		index := strings.LastIndex(ip,":")
+		var m = make(map[string]interface{})
+		m["host"] = ip[:index]
+		p := ip[(index+1):]
+		fmt.Println(p)
+		m["port"],_ = strconv.Atoi(p)
+		sendOkWithData(w,m)
+	}else {
+		return &AppError{statusCode:1000,message:"用户不在线"}
+	}
 	return nil
 }

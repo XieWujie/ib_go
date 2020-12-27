@@ -20,14 +20,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="73946b17-f69b-4b47-b974-3ed1f4001a1b" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/imio/friend.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/imio/udpConnect.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/message.go" beforeDir="false" afterPath="$PROJECT_DIR$/db/message.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/db/user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imio/cnet.go" beforeDir="false" afterPath="$PROJECT_DIR$/imio/cnet.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imio/conversation.go" beforeDir="false" afterPath="$PROJECT_DIR$/imio/conversation.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imio/message.go" beforeDir="false" afterPath="$PROJECT_DIR$/imio/message.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/imio/net.go" beforeDir="false" afterPath="$PROJECT_DIR$/imio/net.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/imio/room.go" beforeDir="false" afterPath="$PROJECT_DIR$/imio/room.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/imio/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/imio/user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imio/ws.go" beforeDir="false" afterPath="$PROJECT_DIR$/imio/ws.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,14 +68,7 @@
         <item name="@localhost" type="feb32156:DbDataSourceImpl" />
         <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
         <item name="vlog: schema" type="76f4a085:MysqlImplModel$Schema" />
-        <item name="user: table" type="285a2a93:MysqlImplModel$Table" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="@localhost" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="vlog: schema" type="76f4a085:MysqlImplModel$Schema" />
-        <item name="verify: table" type="285a2a93:MysqlImplModel$Table" />
+        <item name="message: table" type="285a2a93:MysqlImplModel$Table" />
       </path>
     </expand>
     <select />
@@ -88,13 +83,6 @@
   <component name="GOROOT" path="C:\Users\xiewujie\sdk\go1.15.2" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="IgnoredFileRootStore">
-    <option name="generatedRoots">
-      <set>
-        <option value="C:\Users\xiewujie\Desktop\ib_go\.idea" />
-      </set>
-    </option>
   </component>
   <component name="ProjectId" id="1iAPDxUSrkGWJqDv7Gcf1tBIOkO" />
   <component name="ProjectLevelVcsManager">
@@ -123,7 +111,7 @@
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="configurable.group.build" />
+    <property name="settings.editor.selected.configurable" value="application.passwordSafe" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -170,77 +158,78 @@
     <MESSAGE value="message list" />
     <MESSAGE value="ws ping" />
     <MESSAGE value="加群和退出群聊" />
-    <option name="LAST_COMMIT_MESSAGE" value="加群和退出群聊" />
+    <MESSAGE value="消息通知开关" />
+    <option name="LAST_COMMIT_MESSAGE" value="消息通知开关" />
   </component>
   <component name="WindowStateProjectService">
     <state x="172" y="273" key="#SQL_Dialects" timestamp="1605339669049">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="172" y="273" key="#SQL_Dialects/0.0.1536.864@0.0.1536.864" timestamp="1605339669049" />
-    <state x="361" y="90" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1607260277581">
+    <state x="361" y="90" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1608621262302">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="361" y="90" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.864@0.0.1536.864" timestamp="1607260277581" />
+    <state x="361" y="90" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.864@0.0.1536.864" timestamp="1608621262302" />
     <state x="521" y="274" key="#com.intellij.ide.actions.ChooseComponentsToExportDialog" timestamp="1607424099514">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="521" y="274" key="#com.intellij.ide.actions.ChooseComponentsToExportDialog/0.0.1536.864@0.0.1536.864" timestamp="1607424099514" />
-    <state x="385" y="30" key="CommitChangelistDialog2" timestamp="1607434362428">
+    <state x="385" y="30" key="CommitChangelistDialog2" timestamp="1607516433284">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="385" y="30" key="CommitChangelistDialog2/0.0.1536.864@0.0.1536.864" timestamp="1607434362428" />
-    <state x="549" y="187" key="FileChooserDialogImpl" timestamp="1602996712076">
+    <state x="385" y="30" key="CommitChangelistDialog2/0.0.1536.864@0.0.1536.864" timestamp="1607516433284" />
+    <state x="549" y="187" key="FileChooserDialogImpl" timestamp="1608638836521">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="549" y="187" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" timestamp="1602996712076" />
+    <state x="549" y="187" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" timestamp="1608638836521" />
     <state x="579" y="333" key="Github.CreateGistDialog" timestamp="1606042129296">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="579" y="333" key="Github.CreateGistDialog/0.0.1536.864@0.0.1536.864" timestamp="1606042129296" />
-    <state width="1342" height="192" key="GridCell.Tab.0.bottom" timestamp="1607512531473">
+    <state width="1493" height="200" key="GridCell.Tab.0.bottom" timestamp="1608966106920">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1342" height="192" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1607512531473" />
-    <state width="1342" height="192" key="GridCell.Tab.0.center" timestamp="1607512531472">
+    <state width="1493" height="200" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1608966106920" />
+    <state width="1493" height="200" key="GridCell.Tab.0.center" timestamp="1608966106920">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1342" height="192" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1607512531472" />
-    <state width="1342" height="192" key="GridCell.Tab.0.left" timestamp="1607512531472">
+    <state width="1493" height="200" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1608966106920" />
+    <state width="1493" height="200" key="GridCell.Tab.0.left" timestamp="1608966106919">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1342" height="192" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1607512531472" />
-    <state width="1342" height="192" key="GridCell.Tab.0.right" timestamp="1607512531473">
+    <state width="1493" height="200" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1608966106919" />
+    <state width="1493" height="200" key="GridCell.Tab.0.right" timestamp="1608966106920">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1342" height="192" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1607512531473" />
-    <state width="1342" height="192" key="GridCell.Tab.1.bottom" timestamp="1607512531473">
+    <state width="1493" height="200" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1608966106920" />
+    <state width="1493" height="277" key="GridCell.Tab.1.bottom" timestamp="1608965108791">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1342" height="192" key="GridCell.Tab.1.bottom/0.0.1536.864@0.0.1536.864" timestamp="1607512531473" />
-    <state width="1342" height="192" key="GridCell.Tab.1.center" timestamp="1607512531473">
+    <state width="1493" height="277" key="GridCell.Tab.1.bottom/0.0.1536.864@0.0.1536.864" timestamp="1608965108791" />
+    <state width="1493" height="277" key="GridCell.Tab.1.center" timestamp="1608965108791">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1342" height="192" key="GridCell.Tab.1.center/0.0.1536.864@0.0.1536.864" timestamp="1607512531473" />
-    <state width="1342" height="192" key="GridCell.Tab.1.left" timestamp="1607512531473">
+    <state width="1493" height="277" key="GridCell.Tab.1.center/0.0.1536.864@0.0.1536.864" timestamp="1608965108791" />
+    <state width="1493" height="277" key="GridCell.Tab.1.left" timestamp="1608965108791">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1342" height="192" key="GridCell.Tab.1.left/0.0.1536.864@0.0.1536.864" timestamp="1607512531473" />
-    <state width="1342" height="192" key="GridCell.Tab.1.right" timestamp="1607512531473">
+    <state width="1493" height="277" key="GridCell.Tab.1.left/0.0.1536.864@0.0.1536.864" timestamp="1608965108791" />
+    <state width="1493" height="277" key="GridCell.Tab.1.right" timestamp="1608965108791">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1342" height="192" key="GridCell.Tab.1.right/0.0.1536.864@0.0.1536.864" timestamp="1607512531473" />
+    <state width="1493" height="277" key="GridCell.Tab.1.right/0.0.1536.864@0.0.1536.864" timestamp="1608965108791" />
     <state width="212" height="477" key="HiddenNamespacesPopup" timestamp="1607260284149">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state width="212" height="477" key="HiddenNamespacesPopup/0.0.1536.864@0.0.1536.864" timestamp="1607260284149" />
-    <state x="270" y="76" key="SettingsEditor" timestamp="1607424146008">
+    <state x="270" y="76" key="SettingsEditor" timestamp="1607665028841">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="270" y="76" key="SettingsEditor/0.0.1536.864@0.0.1536.864" timestamp="1607424146008" />
-    <state x="361" y="165" key="Vcs.Push.Dialog.v2" timestamp="1607434366226">
+    <state x="270" y="76" key="SettingsEditor/0.0.1536.864@0.0.1536.864" timestamp="1607665028841" />
+    <state x="361" y="165" key="Vcs.Push.Dialog.v2" timestamp="1607516438718">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="361" y="165" key="Vcs.Push.Dialog.v2/0.0.1536.864@0.0.1536.864" timestamp="1607434366226" />
+    <state x="361" y="165" key="Vcs.Push.Dialog.v2/0.0.1536.864@0.0.1536.864" timestamp="1607516438718" />
     <state width="775" height="439" key="XDebugger.FullValuePopup" timestamp="1603452193783">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
@@ -263,28 +252,38 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/imio/user.go</url>
-          <line>114</line>
+          <line>117</line>
           <option name="timeStamp" value="24" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/imio/user.go</url>
-          <line>61</line>
+          <line>64</line>
           <option name="timeStamp" value="27" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/imio/message.go</url>
-          <line>128</line>
+          <line>132</line>
           <option name="timeStamp" value="28" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/imio/room.go</url>
-          <line>59</line>
+          <line>60</line>
           <option name="timeStamp" value="29" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/imio/room.go</url>
-          <line>91</line>
+          <line>113</line>
           <option name="timeStamp" value="33" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/imio/room.go</url>
+          <line>72</line>
+          <option name="timeStamp" value="34" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/imio/user.go</url>
+          <line>250</line>
+          <option name="timeStamp" value="37" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
