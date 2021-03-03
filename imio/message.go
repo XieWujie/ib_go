@@ -12,8 +12,6 @@ import (
 	"strconv"
 )
 
-
-
 func sendChat(m db.Message) *AppError {
 	if m.MessageId == 0 {
 		_ = m.Save()
@@ -29,6 +27,19 @@ func sendChat(m db.Message) *AppError {
 		sendMsgTo(m, v.UserId)
 	}
 	return nil
+}
+
+func sendRtc(m db.Message) {
+	cov := db.Conversation{
+		ConversationId: m.ConversationId,
+	}
+	_ = cov.Get()
+	var member = cov.Members
+	for _, v := range member {
+		if v.UserId != m.SendFrom {
+			sendMsgTo(m, v.UserId)
+		}
+	}
 }
 
 func sendAgreeFriendMessage(from int, conversationId int, to int) {
@@ -60,23 +71,23 @@ func sendMsgTo(message db.Message, to int) {
 	if !exit {
 		return
 	}
-	var toUser = db.User{UserId:to}
+	var toUser = db.User{UserId: to}
 	_ = toUser.Get()
 	if message.FromType == db.MessageFromRoom {
-		for _,v := range toUser.Rooms{
-			if message.ConversationId == v.ConversationId{
+		for _, v := range toUser.Rooms {
+			if message.ConversationId == v.ConversationId {
 				message.Notify = v.Notify
 				break
 			}
 		}
-	}else if message.FromType == db.MessageFromFriend {
-		for _,v := range toUser.Friends{
-			if message.ConversationId == v.ConversationId{
+	} else if message.FromType == db.MessageFromFriend {
+		for _, v := range toUser.Friends {
+			if message.ConversationId == v.ConversationId {
 				message.Notify = v.Notify
 				break
 			}
 		}
-	}else {
+	} else {
 		message.Notify = true
 	}
 	user := db.User{UserId: message.SendFrom}
@@ -95,7 +106,7 @@ func sendMsgTo(message db.Message, to int) {
 		target["room"] = room
 	}
 	rec, _ := json.Marshal(target)
-	fmt.Println("sendTo:", user.Username, string(rec))
+	fmt.Println("sendTo:", toUser.Username, string(rec))
 	err := ws.wsWrite(websocket.TextMessage, rec)
 	if err != nil {
 		log.Println(err)
@@ -142,24 +153,53 @@ func messageDispatch(m db.Message) *AppError {
 	}
 	var err *AppError
 
-	switch m.MessageType {
-	case db.TEXT:
-		err = sendChat(m)
-		break
-	case db.WRITE:
-		err = sendChat(m)
-		break
-	case db.IMAGE:
-		err = sendChat(m)
-		break
-	case db.WITHDRAW:
-		err = withdraw(m)
-		break
-	case db.RECORD:
-		err = sendChat(m)
-		break
+	if m.MessageType == db.WITHDRAW {
+		withdraw(m)
+	} else if m.MessageType == db.RTC_REGISTER_AUDIO || m.MessageType == db.RTC_REGISTER_VIDEO {
+		handleRtcRegister(m)
+	} else {
+		if m.MessageType > 100 {
+			sendRtc(m)
+		} else {
+			sendChat(m)
+		}
 	}
 	return err
+}
+
+func handleRtcRegister(m db.Message) {
+	if m.MessageId == 0 {
+		_ = m.Save()
+	} else {
+		_ = m.Update()
+	}
+	cov := db.Conversation{
+		ConversationId: m.ConversationId,
+	}
+	_ = cov.Get()
+	var member = cov.Members
+	if m.FromType == db.MessageFromFriend {
+		isOnline := false
+		otherId := m.SendFrom
+		for _, v := range member {
+			if v.UserId != m.SendFrom {
+				otherId = v.UserId
+				_, isOnline = wsConnAll[v.UserId]
+			}
+		}
+		sendMsgTo(m, otherId)
+		from := m.SendFrom
+		m.SendFrom = otherId
+		if isOnline {
+			m.MessageType = db.RTC_ONLINE
+		} else {
+			m.MessageType = db.RTC_NOT_ONLINE
+		}
+		sendMsgTo(m, from)
+	}
+	for _, v := range member {
+		sendMsgTo(m, v.UserId)
+	}
 }
 
 func withdraw(m db.Message) *AppError {

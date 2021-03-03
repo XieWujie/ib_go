@@ -10,9 +10,14 @@ const VerifyMessage messageType = 3
 const AgreeFriend messageType = 2
 const TEXT messageType = 11
 const WRITE = 12
-const RECORD  = 14
+const RECORD = 14
 const IMAGE = 13
 const WITHDRAW = 4
+
+const RTC_NOT_ONLINE = 103
+const RTC_ONLINE = 104
+const RTC_REGISTER_AUDIO = 101
+const RTC_REGISTER_VIDEO = 102
 
 type Message struct {
 	MessageId      int         `json:"messageId" xorm:"pk autoincr"`
@@ -25,7 +30,7 @@ type Message struct {
 	SendTime       int64       `json:"sendTime"`
 	FromType       int         `json:"fromType"`
 	CiteMessageId  int         `json:"citeMessageId"`
-	Notify         bool       	`json:"notify"`
+	Notify         bool        `json:"notify"`
 }
 
 const MessageFromFriend = 1

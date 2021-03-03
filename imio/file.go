@@ -1,7 +1,9 @@
 package imio
 
 import (
+	"encoding/json"
 	"io"
+	"io/ioutil"
 	"math/rand"
 	"net/http"
 	"os"
@@ -35,6 +37,20 @@ func handleFilePost(w http.ResponseWriter, r *http.Request) *AppError {
 	} else {
 		return &AppError{message: "请求方式错误", statusCode: 400}
 	}
+	return nil
+}
+
+func getEmo(w http.ResponseWriter, r *http.Request) *AppError {
+	n := r.URL.Query().Get("name")
+	url := "E:\\file\\" + n + ".json"
+	f, err := os.Open(url)
+	if err != nil {
+		return &AppError{error: err}
+	}
+	content, _ := ioutil.ReadAll(f)
+	var list []map[string]string
+	json.Unmarshal(content, &list)
+	sendOkWithData(w, list)
 	return nil
 }
 
